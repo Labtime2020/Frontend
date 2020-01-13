@@ -1,0 +1,56 @@
+<h1>Cadastrar</h1>
+<h6>Os campos com (*) são preenchimento obrigatório.</h6>
+<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <div class="form-grup">
+    <label for="nome">Nome:</label>
+    <input
+      name="nome"
+      type="texto"
+      class="form-control"
+      id="nome"
+      placeholder="Nome*"
+      ngModel
+    />
+  </div>
+  <div class="form-grup">
+    <label for="sobrenome">Sobrenome:</label>
+    <input
+      name="sobrenome"
+      type="texto"
+      class="form-control"
+      id="sobrenome"
+      placeholder="Sobrenome*"
+      ngModel
+    />
+  </div>
+  <div class="form-grup">
+    <label for="email">Email:</label>
+    <input
+    name="email"
+      type="texto"
+      class="form-control"
+      id="nome"
+      placeholder="Nome@email.com*"
+      ngModel
+    />
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="pwd">Senha:</label>
+    <div class="col-sm-10">
+      <input
+        name="pwd"
+        type="password"
+        class="form-control"
+        id="pwd"
+        placeholder="Enter password"
+        ngModel
+      />
+    </div>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" /> Lembre me</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Cadastrar</button>
+  <!--button type="button" class="cancelbtn">Cancelar</button-->
+</form>
