@@ -1,29 +1,37 @@
-<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+<!--Email-->
+<form [formGroup]="flogin" (ngSubmit)="onsub()">
   <div class="imgcontainer">
     <img src="img_avatar2.png" alt="Avatar" class="avatar" />
   </div>
   <div class="form-grup">
     <label for="email">Email:</label>
     <input
-      name="email"
+      formControlName="email"
       type="texto"
       class="form-control"
-      id="nome"
       placeholder="Nome@email.com*"
-      ngModel
+      [ngClass]="{ 'is-invalid': submitted && flogin.controls.email.errors }"
     />
+    <div *ngIf="submitted && flogin.controls.email.errors" class="invalid-feedback">
+      <p *ngIf="flogin.controls.email.errors.required">O preenchimento do e-mail é obrigatório</p>
+      <p *ngIf="flogin.controls.email.errors.email">O e-mail deve ser um endereço válido</p>
   </div>
+  <!--Senha-->
   <div class="form-group">
     <label class="control-label col-sm-2" for="pwd">Senha:</label>
     <div class="col-sm-10">
       <input
-        name="pwd"
+      formControlName="pwdd"
         type="password"
         class="form-control"
-        id="pwd"
         placeholder="Senha*"
-        ngModel
+        [ngClass]="{ 'is-invalid': submitted && flogin.controls.pwdd.errors } "
       />
+      <div *ngIf="submitted && flogin.controls.pwdd.errors" class="invalid-feedback">
+        <p *ngIf="flogin.controls.pwdd.errors.required">O preenchimento da senha é obrigatório</p>
+        <p *ngIf="flogin.controls.pwdd.errors.minlength">A senha deve ter no minimo 6 caracteres</p>
+        <p *ngIf="flogin.controls.pwdd.errors.maxlength">A senha deve ter no máximo 15 caracteres</p>
+      </div>
     </div>
   </div>
   <div class="checkbox">
@@ -35,4 +43,6 @@
     <button type="button" class="cancelbtn">Cancelar</button>
     <span class="psw">Esqueceu a  <a href="#">Senha?</a></span>
   </div>
+  </div>
+
 </form>

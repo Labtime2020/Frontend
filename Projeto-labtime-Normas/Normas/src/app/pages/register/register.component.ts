@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { FormatWidth } from '@angular/common';
+import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
+//import {UniqueEmailValidatorService} from '../../../../core/services/validations/unique-email-validator.service';
+
+//import{Http} from '@angular/http';
+//import { map, filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: "app-register",
@@ -10,22 +13,69 @@ import { FormatWidth } from '@angular/common';
 export class RegisterComponent implements OnInit {
   // variavel que vai representar o nosso formulario - em que vamos trabalhar no nosso componente
   //, onde nos vamos adicionar
-   // todas as validações os agrupamentos dos dados 
+  // todas as validações os agrupamentos dos dados
   formulario: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  loading = false;
+  submitted = false;
+
+  constructor(
+    private formBuilder: FormBuilder
+    ) {}
   // vamos criar nosso formulário no momento da nossa inicialização do componente
   ngOnInit() {
     // instanciando essa classe, que contem um objeto
     // criar nosso formulario no momento da instanciação do componente
-    this.formulario = new FormGroup({
-      nome: new FormControl('Nome*'),
-      sobrenome: new FormControl('Sobrenome*'),
-      email: new FormControl('Nome@email.com*'),
-      pwd: new FormControl('Senha')
+    this.createForm();
+  }
+
+  createForm(){
+    this.formulario = this.formBuilder.group({
+      nome: ['', [Validators.required, Validators.maxLength(50)]],
+      sobrenome: ['', [Validators.required, Validators.maxLength(50)]],
+      email: ['', Validators.compose([ // sync validator
+        Validators.required,
+        Validators.email,
+        Validators.maxLength(100),
+      ]),
+     // UniqueEmailValidatorService.createValidator(this.programmerService)
+     ],
+      pwd: ['',[Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
     });
   }
 
-  onSubmit(form) {
-    console.log(form);
+  get f(){
+    return this.formulario.controls;
   }
+
+  onsub() {
+    console.log(this.formulario);
+    this.register(); 
+    
+  }
+
+  private register() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.formulario.invalid) {
+      return;
+    }
+
+    /*this.loading = true;
+    this.programmerService.register(this.formulario.controls.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.alertService.showSuccess('Cadastro realizado com sucesso.');
+          this.router.navigate(['/login']);
+        },
+        error => {
+          this.alertService.showDanger('Cadastro não realizado, por favor verificar.');
+          this.loading = false;
+        });*/
+  }
+
+  /*goRegister(){
+    this.router.navigate(['/programmer/register']);
+  }*/
 }
