@@ -1,3 +1,5 @@
+import { UserService } from './../../services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedModuleModule } from './../../shared/shared-module.module';
 import { FormDebugComponent } from './../../shared/form-debug/form-debug.component';
 import { NgModule } from '@angular/core';
@@ -15,8 +17,7 @@ import { HttpModule } from '@angular/http';
     ReactiveFormsModule,
     FormControl,
     FormBuilder,
-    SharedModuleModule,
-    HttpModule
+    SharedModuleModule
   ]
 })
 export class RegisterModule { }

@@ -13,7 +13,10 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   // Register Programmer
-  register(user: User) {
-    return this.http.put(`${environment.backend}/user`, user);
+  register(user: FormData) {
+    console.log('userrr');
+    console.log(user)
+    return this.http.post(`${environment.backend}/hey`,user);
+    //return this.http.post(`${environment.backend}`, user);
   }
 }

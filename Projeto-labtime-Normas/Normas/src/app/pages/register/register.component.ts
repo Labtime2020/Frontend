@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { AlertService } from './../../core/services/notification/alert.service';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit } from "@angular/core";
@@ -25,18 +26,19 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private alertService: AlertService,
-    private router: Router
-    ) {}
+    private router: Router,
+    private cliente: HttpClient
+    ) { }
   // vamos criar nosso formulário no momento da nossa inicialização do componente
   ngOnInit() {
     // instanciando essa classe, que contem um objeto
     // criar nosso formulario no momento da instanciação do componente
     this.createForm();
+    this.cliente.get('https://reqres.in/api/users').subscribe(arrow => console.log(arrow));
   }
 
   createForm(){
     this.formulario = this.formBuilder.group({
-      avatar:[],
       nome: ['', [Validators.required, Validators.maxLength(50)]],
       sobrenome: ['', [Validators.required, Validators.maxLength(50)]],
       email: ['', Validators.compose([ // sync validator
@@ -46,7 +48,7 @@ export class RegisterComponent implements OnInit {
       ]),
      // UniqueEmailValidatorService.createValidator(this.programmerService)
      ],
-      pwd: ['',[Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
+      password: ['',[Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
     });
   }
 
@@ -58,8 +60,13 @@ export class RegisterComponent implements OnInit {
   // -As mensagens de validação são exibidas somente depois que o usuário 
   //tentar enviar o formulário pela primeira vez
   onsub() {
+    if (this.userService == null){
+      console.log('nuloo');
+    }
     console.log(this.formulario);
     this.register(); 
+    const formDate = new FormData();
+    
     
   }
 
@@ -78,16 +85,12 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.userService.register(this.formulario.value)
-      .subscribe(
-        data => {
-          this.alertService.showSuccess('Cadastro realizado com sucesso.');
-          this.router.navigate(['/login']);
-        },
-        error => {
-          this.alertService.showDanger('Cadastro não realizado, por favor verificar.');
-          this.loading = false;
-        });
+    const formdata = new FormData();
+    formdata.append('file',null);
+    formdata.append('usuario', this.formulario.value);
+    this.userService.register(formdata).subscribe(
+        data => {}
+        );
   }
 
   goRegister(){
