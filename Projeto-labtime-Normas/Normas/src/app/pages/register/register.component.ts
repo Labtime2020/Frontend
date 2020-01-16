@@ -1,5 +1,8 @@
+import { AlertService } from './../../core/services/notification/alert.service';
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
+import { Router } from '@angular/router';
 //import {UniqueEmailValidatorService} from '../../../../core/services/validations/unique-email-validator.service';
 
 //import{Http} from '@angular/http';
@@ -19,7 +22,10 @@ export class RegisterComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private alertService: AlertService,
+    private router: Router
     ) {}
   // vamos criar nosso formulário no momento da nossa inicialização do componente
   ngOnInit() {
@@ -46,11 +52,20 @@ export class RegisterComponent implements OnInit {
   get f(){
     return this.formulario.controls;
   }
-
+  // o formulário vincula o evento de ENVIO do formulário ao manipulador 
+  //onsub.
+  // -As mensagens de validação são exibidas somente depois que o usuário 
+  //tentar enviar o formulário pela primeira vez
   onsub() {
     console.log(this.formulario);
     this.register(); 
     
+  }
+
+  onReset(){
+    this.submitted=false;
+    this.formulario.reset();
+
   }
 
   private register() {
@@ -61,9 +76,8 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    /*this.loading = true;
-    this.programmerService.register(this.formulario.controls.value)
-      .pipe(first())
+    this.loading = true;
+    this.userService.register(this.formulario.value)
       .subscribe(
         data => {
           this.alertService.showSuccess('Cadastro realizado com sucesso.');
@@ -72,10 +86,10 @@ export class RegisterComponent implements OnInit {
         error => {
           this.alertService.showDanger('Cadastro não realizado, por favor verificar.');
           this.loading = false;
-        });*/
+        });
   }
 
-  /*goRegister(){
+  goRegister(){
     this.router.navigate(['/programmer/register']);
-  }*/
+  }
 }

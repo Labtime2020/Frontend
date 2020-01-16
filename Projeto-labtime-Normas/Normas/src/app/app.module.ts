@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './pages/register/register.component';
 import { TesteComponent } from './teste/teste.component';
 import { FormDebugComponent } from './shared/form-debug/form-debug.component';
+import {ToastrModule} from 'ngx-toastr';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { FormDebugComponent } from './shared/form-debug/form-debug.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
+    RouterModule
   
   ],
   providers: [],
