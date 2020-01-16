@@ -36,6 +36,7 @@ export class RegisterComponent implements OnInit {
 
   createForm(){
     this.formulario = this.formBuilder.group({
+      avatar:[],
       nome: ['', [Validators.required, Validators.maxLength(50)]],
       sobrenome: ['', [Validators.required, Validators.maxLength(50)]],
       email: ['', Validators.compose([ // sync validator

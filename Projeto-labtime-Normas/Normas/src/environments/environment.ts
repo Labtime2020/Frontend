@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backend: 'http://192.168.1.49:8082/notifica3-ws'
+  backend: '192.168.1.238:9090/cadastrar'
 };
 
 

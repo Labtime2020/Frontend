@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    /*this.loading = true;
-    this.authenticationService.login(this.flogin.controls.email.value, this.flogin.controls.pwdd.value)
+    this.loading = true;
+    /*this.authenticationService.login(this.flogin.controls.email.value, this.flogin.controls.pwdd.value)
       .subscribe(
         (data: { body: {} }) => {
           const programmer: any = data.body;

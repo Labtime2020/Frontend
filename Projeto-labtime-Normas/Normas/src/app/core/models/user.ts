@@ -8,6 +8,7 @@ export class User {
     pwd?: string;
     email?: string;
     adm?: boolean;
+    avatar?:null;
     situation?: Situation;
   }
   
