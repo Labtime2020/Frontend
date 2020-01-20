@@ -1,20 +1,19 @@
-import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Injectable } from "@angular/core";
+import { ToastrService } from "ngx-toastr";
 //import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
 
 export enum AlertTypes {
-  DANGER = 'danger',
-  SUCCESS = 'success',
-  WARNING = 'warning'
+  DANGER = "danger",
+  SUCCESS = "success",
+  WARNING = "warning"
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AlertService {
+  constructor(private toastrService: ToastrService) {}
 
-  constructor(private toastrService: ToastrService) { }
-  
   showSuccess(message: string) {
     this.toastrService.success(message);
   }
@@ -26,5 +25,4 @@ export class AlertService {
   showDanger(message: string) {
     this.toastrService.error(message);
   }
-
 }

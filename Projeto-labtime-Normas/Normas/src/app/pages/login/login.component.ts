@@ -1,3 +1,6 @@
+import { Router, ActivatedRoute } from '@angular/router';
+import { AlertService } from './../../core/services/notification/alert.service';
+import { AuthenticationService } from './../../core/services/authentication/authentication.service';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 
@@ -13,7 +16,13 @@ export class LoginComponent implements OnInit {
   returnUrl: string = '/home';
   error = '';
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private alertService: AlertService,
+    private router: Router,
+    private route: ActivatedRoute
+    ) {}
 
   ngOnInit() {
     this.createForm();
@@ -21,20 +30,19 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.flogin = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
-      pwdd: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
+      username: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
     });
-    //this.authenticationService.logout();
+    this.authenticationService.logout();
   }
 
-  get f(){
-    return this.flogin.controls;
-  }
+
 
   onsub() {
     console.log(this.flogin.getRawValue());
     this.login();
   }
+
   private login() {
     this.submitted = true;
 
@@ -42,23 +50,46 @@ export class LoginComponent implements OnInit {
     if (this.flogin.invalid) {
       return;
     }
-
+    //console.log(this.flogin);
     this.loading = true;
-    /*this.authenticationService.login(this.flogin.controls.email.value, this.flogin.controls.pwdd.value)
-      .subscribe(
-        (data: { body: {} }) => {
-          const programmer: any = data.body;
-          localStorage.setItem('auth', programmer.authentication);
-          localStorage.setItem('pid', programmer.id);
-          // localStorage.setItem('adm', programmer.adm);
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.alertService.showDanger('Emaill ou senha incorretos, por favor verificar.');
-          this.error = error;
-        }, () => {
-          this.loading = false;
-        });*/
+    const formdata = new FormData();
+    formdata.append('usuario', JSON.stringify(this.flogin.value));
+    this.authenticationService.login(this.flogin.value).
+    subscribe(
+      (data: {body: {} }) => {
+        const usuario: any = data.body;
+        localStorage.setItem('auth', usuario.authentication);
+        localStorage.setItem('pid', usuario.id);
+        this.router.navigate([this.returnUrl]);
+
+      },
+      error => {
+        this.alertService.showDanger('Emaill ou senha incorretos, por favor verificar.');
+        this.error = error;
+      }, () => {
+        this.loading = false;
+      }
+    );
+          /*this.authenticationService.login(this.flogin.controls.email.value, this.flogin.controls.pwdd.value)
+            .subscribe(
+              (data: { body: {} }) => {
+                const programmer: any = data.body;
+                localStorage.setItem('auth', programmer.authentication);
+                localStorage.setItem('pid', programmer.id);
+                // localStorage.setItem('adm', programmer.adm);
+                this.router.navigate([this.returnUrl]);
+              },
+              error => {
+                this.alertService.showDanger('Emaill ou senha incorretos, por favor verificar.');
+                this.error = error;
+              }, () => {
+                this.loading = false;
+              });*/
 
   }
+
+  goRegister(){
+    this.router.navigate(['/register']);
+  }
+
 }

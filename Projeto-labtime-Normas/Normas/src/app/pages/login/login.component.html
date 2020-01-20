@@ -1,36 +1,36 @@
 <!--Email-->
 <form [formGroup]="flogin" (ngSubmit)="onsub()">
-  <div class="imgcontainer">
+  <!--div class="imgcontainer">
     <img src="img_avatar2.png" alt="Avatar" class="avatar" />
-  </div>
+  </div-->
   <div class="form-grup">
     <label for="email">Email:</label>
     <input
-      formControlName="email"
+      formControlName="username"
       type="texto"
       class="form-control"
       placeholder="Nome@email.com*"
-      [ngClass]="{ 'is-invalid': submitted && flogin.controls.email.errors }"
+      [ngClass]="{ 'is-invalid': submitted && flogin.controls.username.errors }"
     />
-    <div *ngIf="submitted && flogin.controls.email.errors" class="invalid-feedback">
-      <p *ngIf="flogin.controls.email.errors.required">O preenchimento do e-mail é obrigatório</p>
-      <p *ngIf="flogin.controls.email.errors.email">O e-mail deve ser um endereço válido</p>
+    <div *ngIf="submitted && flogin.controls.username.errors" class="invalid-feedback">
+      <p *ngIf="flogin.controls.username.errors.required">O preenchimento do e-mail é obrigatório</p>
+      <p *ngIf="flogin.controls.username.errors.email">O e-mail deve ser um endereço válido</p>
   </div>
   <!--Senha-->
   <div class="form-group">
-    <label class="control-label col-sm-2" for="pwd">Senha:</label>
+    <label class="control-label col-sm-2" for="password">Senha:</label>
     <div class="col-sm-10">
       <input
-      formControlName="pwdd"
+      formControlName="password"
         type="password"
         class="form-control"
         placeholder="Senha*"
-        [ngClass]="{ 'is-invalid': submitted && flogin.controls.pwdd.errors } "
+        [ngClass]="{ 'is-invalid': submitted && flogin.controls.password.errors } "
       />
-      <div *ngIf="submitted && flogin.controls.pwdd.errors" class="invalid-feedback">
-        <p *ngIf="flogin.controls.pwdd.errors.required">O preenchimento da senha é obrigatório</p>
-        <p *ngIf="flogin.controls.pwdd.errors.minlength">A senha deve ter no minimo 6 caracteres</p>
-        <p *ngIf="flogin.controls.pwdd.errors.maxlength">A senha deve ter no máximo 15 caracteres</p>
+      <div *ngIf="submitted && flogin.controls.password.errors" class="invalid-feedback">
+        <p *ngIf="flogin.controls.password.errors.required">O preenchimento da senha é obrigatório</p>
+        <p *ngIf="flogin.controls.password.errors.minlength">A senha deve ter no minimo 6 caracteres</p>
+        <p *ngIf="flogin.controls.password.errors.maxlength">A senha deve ter no máximo 15 caracteres</p>
       </div>
     </div>
   </div>
@@ -40,8 +40,15 @@
 
   <button type="submit" class="btn btn-primary">Entrar</button>
   <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancelar</button>
-    <span class="psw">Esqueceu a  <a href="#">Senha?</a></span>
+  <section align="center">
+    <span class="psw">Esqueci minha  <a href="/alterarsenha">Senha?</a></span>
+  
+      <span>
+          Ainda não é cadastrado?
+          <button class="btn btn-outline btn-rounded btn-fix btn-block" type="button" (click)="goRegister()">Cadastrar-se
+          </button>
+        </span>
+  </section>
   </div>
   </div>
 
